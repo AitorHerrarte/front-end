@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import StartScreen from "./pages/startScreen/StartScreen";
+import GeneralLayout from "./components/generalLayout/GeneralLayout";
+import ProfilePage from "./pages/profile/Profile";
+import Login from "./components/login/loginPage";
+import Register from "./components/register/registerPage";
+// import MainMenu from "./pages/mainMenu/MainMenu";
+import Dashboard from "./pages/mainMenu/Dashboard";
+import Accounts from "./pages/accounts/MyAccounts";
+import Friends from "./pages/friends/Friends";
+import Stocks from "./pages/stocks/Stocks";
+
+
+
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <Routes>
+        <Route path="/" element={<StartScreen />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/Profile" element={<GeneralLayout><ProfilePage /></GeneralLayout>} />
+        <Route path="/DashBoard" element={<GeneralLayout><Dashboard /></GeneralLayout>} />
+        <Route path="/Friends" element={<GeneralLayout><Friends /></GeneralLayout>} />
+        <Route path="/Stocks" element={<GeneralLayout><Stocks /></GeneralLayout>} />
+        <Route path="/Accounts" element={<GeneralLayout><Accounts /></GeneralLayout>} />
+      </Routes>
+
+    </>
   );
 }
 
