@@ -21,22 +21,36 @@ export default function AddAccountPage() {
   const [newAccountData, setnewAccountData] = useState({
     accountName: "",
     balance: "",
+    broker: "",
   });
   const [accounts, setAccounts] = useState ([]);
   const navigate = useNavigate();
 
-
-  const getAccountData = async () => {
+  const handleToastFail = () => {
+    toast.error("Su user name , email o password no son válidos");
+  };
+  const getAccounts = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/accounts/getAccountUser")
-      setAccounts(response.data);
-    }catch(error){
-      console.log("error al obtener las accounts del usuario", error);
+      const response = await axios.get(
+        `http://localhost:4003/accounts/getAccountUser`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
+      
+      setAccounts(response.data)
+    }catch (error){
+        handleToastFail();
     }
   }
-
+  useEffect(() => {
+    getAccounts();
+  }, []);
   const addAccount = async () => {
-    getAccountData();
+    getAccounts();
     try {
       const response = await axios.post(
         `http://localhost:4003/accounts/addAccount/`,
@@ -47,22 +61,23 @@ export default function AddAccountPage() {
           },
         }
       );
-      getAccountData();
-      console.log("Respuesta del backend:", response.data);
+     await getAccounts();
+     
+   
     } catch (error) {
-      console.error("Error al añadir la account", error);
-      // Aquí puedes manejar errores, como mostrar un mensaje de error al usuario, etc.
+     
+      handleToastFail();
     }
 
     
   };
     useEffect(() => {
-    getAccountData();
+      getAccounts();
   }, []);
   const handleAddAccount = (accounts) => {
     addAccount(accounts);
     toast.success("you added ur account correctly");
-    getAccountData();
+    getAccounts();
     navigate('/Accounts')
   };
   const handleInputChange = (event) => {
@@ -100,6 +115,17 @@ export default function AddAccountPage() {
               type="text"
               name="accountName"
               value={newAccountData.accountName}
+              required
+              fullWidth              
+              onChange={handleInputChange}
+              autoFocus
+            />
+             <TextField
+              margin="normal"
+              label="Broker"
+              type="text"
+              name="broker"
+              value={newAccountData.broker}
               required
               fullWidth              
               onChange={handleInputChange}

@@ -5,6 +5,7 @@ import Title from './Title';
 import { useState, useContext , useEffect} from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -18,6 +19,12 @@ export default function Deposits() {
   const [balance0, setBalance0] = useState([])
   const [profit0, setProfit0] = useState([])
 
+  const {  logout, reload, setReload } = useContext(AuthContext);
+
+  const handleToastFail = () => {
+    toast.error("something went wrong !");
+  };
+
   const getAccounts = async () => {
     try {
       const response = await axios.get(
@@ -30,24 +37,29 @@ export default function Deposits() {
         }
       );
       
+    
       setAccounts(response.data)
+     
       const balances = response.data.map(account => account.balance);
-      const profits = response.data.map(account => account.profit);
+      const profits = response.data.map(account =>  parseFloat(account.profit));
+      
 
       setBalance0(balances);
-      setProfit0(profits);
-      console.log("cuentas obtenidas", setBalance0)
+      setProfit0(profits, "soy profit");
+     
     }catch (error){
-      console.error("Error al obtener las cuentas del usuario", error);
+      
     }
   }
 
   const totalBalance = balance0.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const totalProfit = profit0.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const totalProfit = profit0.reduce((accumulator, currentValue) => accumulator + currentValue, 0); 
 
   useEffect(() => {
     getAccounts();
-  }, []);
+    const interval = setInterval(getAccounts, 1000);
+    return () => clearInterval(interval);
+  }, [reload]);
   
   return (
     <React.Fragment>

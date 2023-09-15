@@ -27,6 +27,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useState, useEffect, useContext } from "react";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { ToastContainer, toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -77,36 +78,44 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+export default function MyAccounts() {
   const [open, setOpen] = React.useState(true);
   const [accounts, setAccounts] = useState([]);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const { profile,logout, reload, setReload } = useContext(AuthContext);
+  const { profile, logout, reload, setReload } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  const handleToastFail = () => {
+    toast.error("something went wrong !");
+  };
 
   const goAddAccount = () => {
     navigate("/AddAccount");
   };
-  const getAccountData = async () => {
+  const getAccounts = async () => {
     try {
-      const response = await axios.get("http://localhost:4003/accounts/getAccountUser",
-      {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:4003/accounts/getAccountUser`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
       setAccounts(response.data);
-      console.log("soy response.data",response.data)
     } catch (error) {
-      console.log("error al obtener las accounts del usuario", error);
+      handleDeleteAccount();
     }
   };
   useEffect(() => {
-    getAccountData();
-  }, []);
-
+    getAccounts();
+    const interval = setInterval(getAccounts, 1000);
+    return () => clearInterval(interval);
+  }, [reload]);
   const handleDeleteAccount = async (accounts) => {
     try {
       const response = await axios.delete(
@@ -117,12 +126,14 @@ export default function Dashboard() {
           },
         }
       );
-      getAccountData();
+      getAccounts();
     } catch (error) {
-      console.log("error al borrar la order", error);
+      handleToastFail();
     }
   };
-
+  const goEditAccount = (accountId) => {
+    navigate(`/EditAccount/${accountId}`);
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -204,22 +215,34 @@ export default function Dashboard() {
                 <TableRow>
                   <TableCell>ACCOUNT</TableCell>
                   <TableCell>BALANCE</TableCell>
+                  <TableCell>BROKER</TableCell>
                   <TableCell align="right">PROFIT</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {accounts.map((accounts) => (
-                  <TableRow key={accounts._id}>
-                    <TableCell>{accounts.accountName}</TableCell>
-                    <TableCell>{accounts.balance}</TableCell>
-                    <TableCell align="right">{`$${accounts.profit}`}</TableCell>
-                    <Button
-                      onClick={() => handleDeleteAccount(accounts)}
-                      color="primary"
-                      align="right"
-                      startIcon={<DeleteIcon />}
-                      
-                    ></Button>
+                {accounts.map((account) => (
+                  <TableRow key={account._id}>
+                    <TableCell>{account.accountName}</TableCell>
+                    <TableCell>{account.balance}</TableCell>
+                    <TableCell>{account.broker}</TableCell>
+                    <TableCell align="right">{`$${account.profit}`}</TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => handleDeleteAccount(account)}
+                        color="primary"
+                        startIcon={<DeleteIcon />}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => goEditAccount(account._id)}
+                        color="primary"
+                      >
+                        Edit
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

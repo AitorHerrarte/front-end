@@ -24,6 +24,8 @@ import Orders from './Orderss';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function Copyright(props) {
   return (
@@ -89,10 +91,47 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [accounts, setAccounts] = useState([])
+  const [balance0, setBalance0] = useState([])
+  const [profit0, setProfit0] = useState([])
   const toggleDrawer = () => {
     setOpen(!open);
   };
   const { profile,logout, reload, setReload } = useContext(AuthContext);
+
+  const handleToastFail = () => {
+    toast.error("something went wrong !");
+  };
+
+  const getAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4003/accounts/getAccountUser`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
+      
+    
+      setAccounts(response.data)
+  
+      const balances = response.data.map(account => account.balance);
+      const profits = response.data.map(account =>  parseFloat(account.profit));
+     
+
+      setBalance0(balances);
+      setProfit0(profits, "soy profit");
+      
+    }catch (error){
+      handleToastFail();
+    }
+  }
+  useEffect(() => {
+    getAccounts();
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>

@@ -52,7 +52,7 @@ export default function Login() {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
     if (!isValidEmail(email)) {
-      console.log("Email incorrecto");
+   
       return;
     }
 

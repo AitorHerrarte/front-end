@@ -6,9 +6,9 @@ import Login from "./components/login/Login";
 import Register from "./components/register/registerPage";
 import Dashboard from "./pages/mainMenu/Dashboard";
 import Accounts from "./pages/accounts/MyAccounts";
-import Friends from "./pages/friends/Friends";
 import Notes from "./pages/notes/notes";
 import AddAccount from "./pages/accounts/AddAccount";
+import EditAccount from "./pages/accounts/EditAccount"
 
 
 
@@ -23,8 +23,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Profile" element={<GeneralLayout><ProfilePage /></GeneralLayout>} />
+        <Route path="/EditAccount/:accountId" element={<GeneralLayout><EditAccount /></GeneralLayout>} />
         <Route path="/DashBoard" element={<GeneralLayout><Dashboard /></GeneralLayout>} />
-        <Route path="/Friends" element={<GeneralLayout><Friends /></GeneralLayout>} />
         <Route path="/Notes" element={<GeneralLayout><Notes /></GeneralLayout>} />
         <Route path="/Accounts" element={<GeneralLayout><Accounts /></GeneralLayout>} />
         <Route path="/AddAccount" element={<GeneralLayout><AddAccount /></GeneralLayout>} />

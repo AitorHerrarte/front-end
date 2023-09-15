@@ -47,6 +47,10 @@ export default function Orders() {
 
   const { profile, setReload, reload } = useContext(AuthContext);
 
+  const handleToastFail = () => {
+    toast.error("something went wrong !");
+  };
+
   const getAccounts = async () => {
     try {
       const response = await axios.get(
@@ -60,9 +64,9 @@ export default function Orders() {
       );
       
       setAccounts(response.data)
-      console.log("cuentas obtenidas", response.data)
+     
     }catch (error){
-      console.error("Error al obtener las cuentas del usuario", error);
+      
     }
   }
   useEffect(() => {
@@ -71,10 +75,15 @@ export default function Orders() {
 
   const getOrderData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4003/orders`);
+      const response = await axios.get(`http://localhost:4003/orders/users/${profile.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
       setOrders(response.data);
     } catch (error) {
-      console.error("Error al obtener las ordenes del usuario", error);
+     handleToastFail();
     }
   };
   const addOrder = async (newOrder) => {
@@ -89,9 +98,8 @@ export default function Orders() {
         }
       );
       getOrderData();
-      console.log("Respuesta del backend:", response.data);
     } catch (error) {
-      console.error("Error al añadir la account", error);
+     handleToastFail();
     }
 
     
@@ -115,16 +123,12 @@ export default function Orders() {
       pair: newOrderData.pair,
       entryPrice: newOrderData.entryPrice,
       closePrice: newOrderData.closePrice,
-      orderProfit: newOrderData.profit,
+      orderProfit: parseFloat(newOrderData.profit),
     };
-    console.log(selectedAccount)
-    console.log(newOrder)
     addOrder(newOrder)
-    console.log("handleaddorder2")
     toast.success("you added ur order correctly");
     setShowPopUp(false);
 
-    console.log("soy el notify");
   };
 
   const handleInputChange = (event) => {
@@ -149,7 +153,7 @@ export default function Orders() {
       );
       getOrderData();
     } catch (error) {
-      console.log("error al borrar la order", error);
+      handleToastFail();
     }
   };
 

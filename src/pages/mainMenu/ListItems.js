@@ -21,9 +21,6 @@ export const MainListItems = () => {
   const goAccounts = () => {
     navigate("/Accounts")
   }
-  const goFriends = () => {
-    navigate("/friends")
-  }
   const goNotes = () => {
     navigate("/Notes")
   }
@@ -44,12 +41,6 @@ export const MainListItems = () => {
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton onClick={goFriends}>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Friends" />
     </ListItemButton>
     <ListItemButton onClick={goNotes}>
       <ListItemIcon>

@@ -31,6 +31,7 @@ import Grid from "@mui/material/Grid";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -78,46 +79,48 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState(false);
+export default function EditAccount({ account }) {
 
-  const { profile,logout, reload, setReload } = useContext(AuthContext);
+  const { accountId } = useParams();
+  const [open, setOpen] = React.useState(true);
+  const [broker, setBroker] = useState(account?.broker || "");
+  const [name, setName] = useState(account?.accountName || "");
+  const [balance, setBalance] = useState(account?.balance || "");
+  
+  
+  const { logout, reload, setReload } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const navigate = useNavigate();
 
-  const handleEmailChange = (event) => {
-    const inputValue = event.target.value;
-    setEmail(inputValue);
-    setEmailError(!isValidEmail(inputValue));
-  };
-  const isValidEmail = (email) => {
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    return emailRegex.test(email);
+  const handleAccountNameChange = (event) => {
+    setName(event.target.value);
   };
 
-  const EmailChange = async () => {
+  const handleToastFail = () => {
+    toast.error("Something went wrong!");
+  };
+
+
+  const nameChange = async () => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
-        { email: email },
+        `http://localhost:4003/accounts/${accountId}/updateAccountName`,
+        { accountName: name },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
       );
-
-      toast.success("Email changed successfully", {
+      
+  
+      toast.success("Account name changed successfully", {
         position: "top-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -129,36 +132,28 @@ export default function Dashboard() {
       });
       setReload(!reload);
     } catch (error) {
-      console.error("something went wrong changing email", error);
-      toast.error(`email already used`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      handleToastFail();
     }
   };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+
+  const handleBrokerChange = (event) => {
+    setBroker(event.target.value);
   };
-  const PasswordChange = async () => {
+
+  const brokerChange = async (account) => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
-        { password: password },
+        `http://localhost:4003/accounts/${accountId}/updateAccountBroker`,
+        { broker: broker },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
       );
-      setReload(!reload);
-
-      toast.success("password changed successfully", {
+     
+  
+      toast.success("Broker changed successfully", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -169,35 +164,28 @@ export default function Dashboard() {
         theme: "colored",
       });
     } catch (error) {
-      console.error("Error al actualizar la contraseña", error);
-      toast.error(`${error}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      handleToastFail();
     }
   };
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  
+
+  const handleBalanceChange = (event) => {
+    setBalance(event.target.value);
   };
-  const NameChange = async () => {
+
+  const balanceChange = async (account) => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
-        { userName: username },
+        `http://localhost:4003/accounts/${accountId}/updateAccountBalance`,
+        { balance: balance },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
       );
-
-      toast.success(`Your user name changed successfully`, {
+  
+      toast.success(`Balance changed successfully`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -208,21 +196,10 @@ export default function Dashboard() {
         theme: "colored",
       });
     } catch (error) {
-      console.error("Error al actualizar el userName", error);
-      toast.error(`user name already used`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      handleToastFail();
     }
     setReload(!reload);
   };
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -231,7 +208,7 @@ export default function Dashboard() {
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              pr: "24px",
             }}
           >
             <IconButton
@@ -255,11 +232,6 @@ export default function Dashboard() {
             >
               PROFILE
             </Typography>
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton> */}
             <button onClick={logout}>
               <ExitToAppIcon color="inherit" />{" "}
             </button>
@@ -280,9 +252,9 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <MainListItems></MainListItems>
+            <MainListItems />
             <Divider sx={{ my: 1 }} />
-            <SecondaryListItems></SecondaryListItems>
+            <SecondaryListItems />
           </List>
         </Drawer>
         <Box
@@ -294,31 +266,18 @@ export default function Dashboard() {
           }}
         >
           <Container sx={{ marginTop: "50px", marginLeft: "10px" }}>
-            <Typography component="h1" variant="h3" sx={{ marginLeft: 60 }}>
-              {profile.userName}
-            </Typography>
-            <Typography component="h1" variant="h3" sx={{ marginLeft: 35 }}>
-              {profile.email}
-            </Typography>
             <Box component="form" noValidate sx={{ mt: 1 }}>
               <Box sx={{ display: "flex", flexDirection: "row" }}>
                 <TextField
                   margin="normal"
                   fullWidth
-                  id="email"
-                  label="Insertar nuevo email"
-                  name="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  error={emailError}
-                  helperText={emailError ? "Email incorrecto" : ""}
-                  InputProps={{
-                    classes: {
-                      underline: emailError ? "error-underline" : "",
-                    },
-                  }}
+                  id="Account name"
+                  label="New account name"
+                  name="name"
+                  value={name}
+                  onChange={handleAccountNameChange}
                 />
-                <Button onClick={EmailChange} id="myButton">
+                <Button onClick={nameChange} id="myButton">
                   Change
                 </Button>
               </Box>
@@ -326,15 +285,15 @@ export default function Dashboard() {
                 <TextField
                   margin="normal"
                   fullWidth
-                  name="password"
-                  label="Insertar nueva contraseña"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  name="broker"
+                  label="New broker"
+                  type="text"
+                  id="broker"
+                  autoComplete="current-broker"
+                  value={broker}
+                  onChange={handleBrokerChange}
                 />
-                <Button onClick={PasswordChange} id="myButton">
+                <Button onClick={brokerChange} id="myButton">
                   Change
                 </Button>
               </Box>
@@ -342,14 +301,14 @@ export default function Dashboard() {
                 <TextField
                   margin="normal"
                   fullWidth
-                  name="username"
-                  label="Insertar nuevo nombre"
-                  type="username"
-                  id="username"
-                  value={username}
-                  onChange={handleUsernameChange}
+                  name="balance"
+                  label="New balance"
+                  type="number"
+                  id="balance"
+                  value={balance}
+                  onChange={handleBalanceChange}
                 />
-                <Button id="myButton" onClick={NameChange}>
+                <Button id="myButton" onClick={balanceChange}>
                   Change
                 </Button>
               </Box>

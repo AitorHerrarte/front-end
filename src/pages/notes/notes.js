@@ -32,6 +32,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { blue, blueGrey, grey } from "@mui/material/colors";
+import { ToastContainer, toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -99,6 +100,10 @@ export default function Notes() {
     getNotes();
   }, []);
 
+  const handleToastFail = () => {
+    toast.error("something went wrong !");
+  };
+
   const getNotes = async () => {
     setIsLoading(true);
     try {
@@ -109,13 +114,13 @@ export default function Notes() {
       });
       setNotes(response.data);
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+        handleToastFail();
     }
     setIsLoading(false);
   };
   const addNote = async () => {
     if (newNote.trim() !== "") {
-      console.log("nota", newNote);
+    
       try {
         const response = await axios.post(
           "http://localhost:4003/notes/addNoteToUser",
@@ -129,7 +134,7 @@ export default function Notes() {
         setNewNote("");
         getNotes();
       } catch (error) {
-        console.error("Error en la solicitud:", error);
+        handleToastFail();
       }
     }
   };
@@ -145,7 +150,7 @@ export default function Notes() {
       );
       getNotes();
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+      handleToastFail();
     }
   };
 
@@ -167,7 +172,7 @@ export default function Notes() {
         getNotes();
       }
     } catch (error) {
-      console.log("error al cambiar la nota", error);
+      handleToastFail();
     }
   };
   const handleNoteChange = (e) => {

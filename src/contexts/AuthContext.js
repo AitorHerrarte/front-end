@@ -10,7 +10,6 @@ export const AuthContext = createContext(null);
 export const AuthContextProvider = ({ children }) => {
   const [profile, setProfile] = useState({});
   const navigate = useNavigate();
-  console.log("soy profile", profile);
   const [reload, setReload] = useState(false);
 
   const handleToastFail = () => {
@@ -22,13 +21,11 @@ export const AuthContextProvider = ({ children }) => {
       return navigate("/");
     }
     try {
-      console.log("soy getmyprofile antes de .get")
       const response = await axios.get("http://localhost:4003/users/me", {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
-      console.log("vengo del backend", response.data);
       setProfile(response.data);
     } catch (error) {
       return navigate("/");
