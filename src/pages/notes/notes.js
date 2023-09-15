@@ -31,7 +31,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { blueGrey, grey } from "@mui/material/colors";
+import { blue, blueGrey, grey } from "@mui/material/colors";
 
 const drawerWidth = 240;
 
@@ -257,15 +257,16 @@ export default function Notes() {
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    backgroundColor: grey[300],
-                    marginTop: 10,
+                    backgroundColor: grey[50],
+                    marginTop: 3,
+                    overflowX: "auto",
                   }}
                 >
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardContent >
                     <Typography
                       align="center"
                       sx={{
-                        backgroundColor: grey[400],
+                        backgroundColor: grey[200],
                         fontWeight: "bold",
                         padding: "0.2em",
                       }}
@@ -278,10 +279,8 @@ export default function Notes() {
                       size="small"
                       onClick={() => deleteNote(note)}
                       variant="contained"
-                      color="grey"
-                      sx={{
-                        backgroundColor: blueGrey[300],
-                      }}
+                      color="primary"
+                      
                     >
                       Delete
                     </Button>
@@ -289,10 +288,8 @@ export default function Notes() {
                       size="small"
                       onClick={() => updateNote(note)}
                       variant="contained"
-                      color="grey"
-                      sx={{
-                        backgroundColor: blueGrey[300],
-                      }}
+                      color="primary"
+                      
                     >
                       Update
                     </Button>

@@ -64,7 +64,7 @@ export default function Login() {
 
       if (response.status === 200) {
         window.localStorage.setItem("token", response.data.token);
-        navigate("/Profile"); 
+        navigate("/DashBoard"); 
       }
     } catch (error) {
       handleToastFail();
