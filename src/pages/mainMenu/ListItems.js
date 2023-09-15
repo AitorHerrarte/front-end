@@ -11,6 +11,7 @@ import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useNavigate } from 'react-router-dom';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export const MainListItems = () => {
   const navigate = useNavigate();
@@ -23,12 +24,21 @@ export const MainListItems = () => {
   const goFriends = () => {
     navigate("/friends")
   }
-  const goStocks = () => {
-    navigate("/Stocks")
+  const goNotes = () => {
+    navigate("/Notes")
+  }
+  const goProfile = () => {
+    navigate("/Profile")
   }
 
   return (
   <React.Fragment>
+    <ListItemButton onClick={goProfile}>
+      <ListItemIcon>
+        <AccountCircleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Profile" />
+    </ListItemButton>
     <ListItemButton onClick={goDashboard}>
       <ListItemIcon>
         <DashboardIcon />
@@ -41,11 +51,11 @@ export const MainListItems = () => {
       </ListItemIcon>
       <ListItemText primary="Friends" />
     </ListItemButton>
-    <ListItemButton onClick={goStocks}>
+    <ListItemButton onClick={goNotes}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Stocks" />
+      <ListItemText primary="Notes" />
     </ListItemButton>
     <ListItemButton onClick={goAccounts}>
       <ListItemIcon>
@@ -62,25 +72,25 @@ export const SecondaryListItems = () => {
   return(
   <React.Fragment>
     <ListSubheader component="div" inset>
-      Saved reports
+           
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <ListItemText primary="" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <AssignmentIcon />
+        
       </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="" />
     </ListItemButton>
   </React.Fragment>
 );

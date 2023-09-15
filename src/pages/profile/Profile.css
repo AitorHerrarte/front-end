@@ -1,202 +1,110 @@
-#divboton {
+/* ProfilePage.css */
+body {
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Color del texto */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .profile {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .profile h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-info {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .profile-info p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .change-username,
+  .change-email,
+  .change-password {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: center;
-    /* min-height: 100vh; */
-}
-
-#botonChulo {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    /* color: white; */
-    font-size: 16px;
-    text-decoration: none;
-    text-transform: uppercase;
-    overflow: hidden;
-    transition: .5s;
-    margin-top: 40px;
-    letter-spacing: 4px;
-
-}
-
-#botonChulo:hover {
-    background: #5e5e5d;
-    color: #ffffff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #39b72d,
-        0 0 25px #39b72d,
-        0 0 50px #39b72d,
-        0 0 100px #39b72d;
-}
-
-#botonChulo span {
-    position: absolute;
-    display: block;
-}
-
-#botonChulo span:nth-child(1) {
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #1bf403);
-    animation: btn-anim1 1s linear infinite;
-}
-
-@keyframes btn-anim1 {
-    0% {
-        left: -100%;
-    }
-
-    50%,
-    100% {
-        left: 100%;
-    }
-}
-
-#botonChulo span:nth-child(2) {
-    top: -100%;
-    right: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, #05d508);
-    animation: btn-anim2 1s linear infinite;
-    animation-delay: .25s
-}
-
-@keyframes btn-anim2 {
-    0% {
-        top: -100%;
-    }
-
-    50%,
-    100% {
-        top: 100%;
-    }
-}
-
-#botonChulo span:nth-child(3) {
-    bottom: 0;
-    right: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(270deg, transparent, #16d619);
-    animation: btn-anim3 1s linear infinite;
-    animation-delay: .5s
-}
-
-@keyframes btn-anim3 {
-    0% {
-        right: -100%;
-    }
-
-    50%,
-    100% {
-        right: 100%;
-    }
-}
-
-#botonChulo span:nth-child(4) {
-    bottom: -100%;
-    left: 0;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(360deg, transparent, #03f447);
-    animation: btn-anim4 1s linear infinite;
-    animation-delay: .75s
-}
-
-@keyframes btn-anim4 {
-    0% {
-        bottom: -100%;
-    }
-
-    50%,
-    100% {
-        bottom: 100%;
-    }
-}
-
-h1 {
-
-    font-size: 60px;
-    /* font-weight: bold; */
-    /* font-family: serif; */
-    letter-spacing: 7px;
-
-}
-
-h1 span {
-    transition: .5s linear
-}
-
-h1:hover span:nth-child(1) {
-    margin-right: 5px
-}
-
-h1:hover span:nth-child(2) {
-    margin-left: 30px
-}
-
-h1:hover span {
-    color: #fff;
-    text-shadow: 0 0 10px #fff,
-        0 0 20px #fff,
-        0 0 40px #fff;
-}
-
-
-
-#shake-horizontal {
-    animation: shake-horizontal .8s cubic-bezier(.455, .03, .515, .955) both
-}
-
-@keyframes shake-horizontal {
-
-    0%,
-    100% {
-        transform: translateX(0)
-    }
-
-    10%,
-    30%,
-    50%,
-    70% {
-        transform: translateX(-10px)
-    }
-
-    20%,
-    40%,
-    60% {
-        transform: translateX(10px)
-    }
-
-    80% {
-        transform: translateX(8px)
-    }
-
-    90% {
-        transform: translateX(-8px)
-    }
-}
-
-#modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-#popup {
-    border-radius: 58px 58px 58px 58px;
-    border: 4px solid #000000;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    margin-bottom: 20px;
+  }
+  
+  .change-username h2,
+  .change-email h2,
+  .change-password h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .change-username form,
+  .change-email form,
+  .change-password form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .change-username input,
+  .change-email input,
+  .change-password input {
+    margin: 10px 0;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .change-username button,
+  .change-email button,
+  .change-password button {
+    background-color: #007bff; /* Color azul claro */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .change-username button:hover,
+  .change-email button:hover,
+  .change-password button:hover {
+    background-color: #0056b3; /* Color azul oscuro al pasar el mouse */
+  }
+  
+  /* Animación de entrada para los formularios */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .change-username form,
+  .change-email form,
+  .change-password form {
+    animation: fadeIn 0.5s ease;
+  }
+  

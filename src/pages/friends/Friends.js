@@ -14,6 +14,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems, SecondaryListItems } from '../mainMenu/ListItems';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useState, useEffect, useContext } from "react";
 
 const drawerWidth = 240;
 
@@ -69,6 +72,7 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>

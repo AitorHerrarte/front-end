@@ -36,22 +36,18 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const login = async (password, email) => {
-
-    console.log("soy el login")
     try {
       const response = await axios.post("http://localhost:4003/users/login", {
         password: password,
         email: email,
       });
-      console.log("soy la respuesta a el .post", response.data)
       window.localStorage.setItem("token", response.data.token);
       if (response.status === 200) {
         getMyProfile();
-        navigate("/Dashboard");
+        navigate("/DashBoard");
       }
     } catch (error) {
       handleToastFail();
-      console.log("error al hacer login", error);
     }
   };
 

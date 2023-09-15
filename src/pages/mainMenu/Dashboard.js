@@ -21,6 +21,9 @@ import { MainListItems, SecondaryListItems } from './ListItems';
 import Chart from './Chart';
 import Deposits from './Deposists';
 import Orders from './Orderss';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useState, useEffect, useContext } from "react";
 
 function Copyright(props) {
   return (
@@ -89,6 +92,7 @@ export default function Dashboard() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const { profile,logout, reload, setReload } = useContext(AuthContext);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -121,11 +125,9 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <button onClick={logout}>
+              <ExitToAppIcon color="inherit" />{" "}
+            </button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -161,7 +163,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 1000 }}>
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>

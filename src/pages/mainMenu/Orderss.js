@@ -20,6 +20,9 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MenuItem from "@mui/material/MenuItem"; 
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
 
 function preventDefault(event) {
   event.preventDefault();
@@ -27,6 +30,8 @@ function preventDefault(event) {
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState("");
   const [showPopUp, setShowPopUp] = useState(false);
   const [newOrderData, setNewOrderData] = useState({
     date: "",
@@ -42,21 +47,41 @@ export default function Orders() {
 
   const { profile, setReload, reload } = useContext(AuthContext);
 
+  const getAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4003/accounts/getAccountUser`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
+      
+      setAccounts(response.data)
+      console.log("cuentas obtenidas", response.data)
+    }catch (error){
+      console.error("Error al obtener las cuentas del usuario", error);
+    }
+  }
+  useEffect(() => {
+    getAccounts();
+  }, []);
+
   const getOrderData = async () => {
     try {
       const response = await axios.get(`http://localhost:4003/orders`);
-      //   setPrice(response.data.price);
-      //   setIncome(response.data.income);
       setOrders(response.data);
     } catch (error) {
       console.error("Error al obtener las ordenes del usuario", error);
     }
   };
-  const addOrder = async () => {
+  const addOrder = async (newOrder) => {
     try {
       const response = await axios.post(
-        `http://localhost:4003/orders/addOrder/`,
-        newOrderData,
+        `http://localhost:4003/orders/addOrder`,
+        newOrder,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -66,9 +91,10 @@ export default function Orders() {
       getOrderData();
       console.log("Respuesta del backend:", response.data);
     } catch (error) {
-      console.error("Error al agregar la orden:", error);
-      // Aquí puedes manejar errores, como mostrar un mensaje de error al usuario, etc.
+      console.error("Error al añadir la account", error);
     }
+
+    
   };
 
   useEffect(() => {
@@ -81,8 +107,20 @@ export default function Orders() {
   const handleCancel = () => {
     setShowPopUp(false);
   };
-  const handleAddOrder = (orders) => {
-    addOrder(orders);
+  const handleAddOrder = () => {
+    const newOrder = {
+      date: newOrderData.date,
+      account:selectedAccount,
+      description: newOrderData.description,
+      pair: newOrderData.pair,
+      entryPrice: newOrderData.entryPrice,
+      closePrice: newOrderData.closePrice,
+      orderProfit: newOrderData.profit,
+    };
+    console.log(selectedAccount)
+    console.log(newOrder)
+    addOrder(newOrder)
+    console.log("handleaddorder2")
     toast.success("you added ur order correctly");
     setShowPopUp(false);
 
@@ -91,13 +129,13 @@ export default function Orders() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setNewOrderData({ ...newOrderData, [name]: value });
+    if (name === "account") {
+      setSelectedAccount(value);
+    } else {
+      setNewOrderData({ ...newOrderData, [name]: value });
+    }
   };
 
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setNewOrderData({ ...newOrderData, image: file });
-  // };
 
   const handleDeleteOrder = async (orders) => {
     try {
@@ -109,7 +147,7 @@ export default function Orders() {
           },
         }
       );
-     getOrderData();
+      getOrderData();
     } catch (error) {
       console.log("error al borrar la order", error);
     }
@@ -133,13 +171,17 @@ export default function Orders() {
         <TableBody>
           {orders.map((orders) => (
             <TableRow key={orders._id}>
-              <TableCell>{new Date(orders.date).toLocaleDateString()}</TableCell>
-              <TableCell>{orders.account}</TableCell>
+              <TableCell>
+                {new Date(orders.date).toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+              {accounts.find((account) => account._id === orders.account)?.accountName || 'N/A'}
+                </TableCell>
               <TableCell>{orders.description}</TableCell>
               <TableCell>{orders.pair}</TableCell>
               <TableCell>{orders.entryPrice}</TableCell>
               <TableCell>{orders.closePrice}</TableCell>
-              <TableCell align="right">{`$${orders.profit}`}</TableCell>
+              <TableCell align="right">{`$${orders.orderProfit}`}</TableCell>
               <Button
                 onClick={() => handleDeleteOrder(orders)}
                 color="primary"
@@ -150,9 +192,6 @@ export default function Orders() {
           ))}
         </TableBody>
       </Table>
-      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link> */}
       <Button
         size="small"
         onClick={() => handleClick(orders)}
@@ -179,14 +218,20 @@ export default function Orders() {
               fullWidth
             />
             <TextField
+              select
               margin="dense"
               label="Account"
-              type="text"
               name="account"
-              value={newOrderData.account}
-              onChange={handleInputChange}
+              value={selectedAccount}
+              onChange={(event) => setSelectedAccount(event.target.value)}
               fullWidth
-            />
+            >
+              {accounts.map((account) => (
+                <MenuItem key={account._id} value={account._id}>
+                  {account.accountName}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               margin="dense"
               label="Description"
@@ -226,13 +271,13 @@ export default function Orders() {
               onChange={handleInputChange}
               fullWidth
             />
-           
+
             <TextField
               margin="dense"
               label="Profit"
               type="number"
               name="profit"
-              value={newOrderData.profit}
+              value={newOrderData.orderProfit}
               onChange={handleInputChange}
               fullWidth
             />

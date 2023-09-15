@@ -1,88 +1,136 @@
-import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { MainListItems, SecondaryListItems } from '../mainMenu/ListItems';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import AddBalance from "./AddAccount"
-
-
+import * as React from "react";
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import MuiDrawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import axios from "axios";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { MainListItems, SecondaryListItems } from "../mainMenu/ListItems";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Title from "../mainMenu/Title";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useState, useEffect, useContext } from "react";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
+  transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  "& .MuiDrawer-paper": {
+    position: "relative",
+    whiteSpace: "nowrap",
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: "border-box",
+    ...(!open && {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.leavingScreen,
       }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
+      width: theme.spacing(7),
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [accounts, setAccounts] = useState([]);
   const toggleDrawer = () => {
     setOpen(!open);
+  };
+  const { profile,logout, reload, setReload } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const goAddAccount = () => {
+    navigate("/AddAccount");
+  };
+  const getAccountData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4003/accounts/getAccountUser",
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+      setAccounts(response.data);
+      console.log("soy response.data",response.data)
+    } catch (error) {
+      console.log("error al obtener las accounts del usuario", error);
+    }
+  };
+  useEffect(() => {
+    getAccountData();
+  }, []);
+
+  const handleDeleteAccount = async (accounts) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4003/accounts/${accounts._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+          },
+        }
+      );
+      getAccountData();
+    } catch (error) {
+      console.log("error al borrar la order", error);
+    }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: "24px", // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -91,8 +139,8 @@ export default function Dashboard() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
+                marginRight: "36px",
+                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
@@ -104,21 +152,19 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Balance
+              Accounts
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <button onClick={logout}>
+              <ExitToAppIcon color="inherit" />{" "}
+            </button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
               px: [1],
             }}
           >
@@ -135,33 +181,60 @@ export default function Dashboard() {
         </Drawer>
         <Box
           sx={{
-            
             flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
-            width: '200vh'
+            height: "100vh",
+            overflow: "auto",
+            width: "200vh",
           }}
         >
-          <Toolbar />
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 500,
-                  }}
-                >
-                  <AddBalance />
-                </Paper>
-              </Grid>
-              {/* Recent Orders */}
-              
-     
-         
-          
+          <Box
+            sx={{
+              marginTop: "50px",
+              marginLeft: "10px",
+            }}
+          >
+            <Title>My Accounts</Title>
+            <Table
+              size="small"
+              sx={{
+                marginTop: "20px",
+              }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>ACCOUNT</TableCell>
+                  <TableCell>BALANCE</TableCell>
+                  <TableCell align="right">PROFIT</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {accounts.map((accounts) => (
+                  <TableRow key={accounts._id}>
+                    <TableCell>{accounts.accountName}</TableCell>
+                    <TableCell>{accounts.balance}</TableCell>
+                    <TableCell align="right">{`$${accounts.profit}`}</TableCell>
+                    <Button
+                      onClick={() => handleDeleteAccount(accounts)}
+                      color="primary"
+                      align="right"
+                      startIcon={<DeleteIcon />}
+                      
+                    ></Button>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
+          <Button
+            onClick={goAddAccount}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Add account
+          </Button>
         </Box>
-        
       </Box>
     </ThemeProvider>
   );
