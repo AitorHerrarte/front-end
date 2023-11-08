@@ -27,6 +27,10 @@ export const MainListItems = () => {
   const goProfile = () => {
     navigate("/Profile")
   }
+  const goNumbers = () => {
+    navigate("/Numbers")
+  }
+  
 
   return (
   <React.Fragment>
@@ -53,6 +57,12 @@ export const MainListItems = () => {
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Accounts" />
+    </ListItemButton>
+    <ListItemButton onClick={goNumbers}>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Numbers" />
     </ListItemButton>
   </React.Fragment>
 );

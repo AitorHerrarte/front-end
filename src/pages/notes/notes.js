@@ -248,7 +248,7 @@ export default function Notes() {
               variant="outlined"
               value={newNote}
               onChange={handleNoteChange}
-              style={{ marginBottom: "16px" }}
+              style={{ marginBottom: "16px" , width:"100%"}}
             />
             <Button variant="contained" color="primary" onClick={addNote}>
               Agregar Nota
@@ -276,7 +276,7 @@ export default function Notes() {
                         padding: "0.2em",
                       }}
                     >
-                      Note: {note.description}
+                     {note.description}
                     </Typography>
                   </CardContent>
                   <CardActions>

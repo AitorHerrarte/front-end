@@ -34,15 +34,12 @@ export default function SignUp() {
       password: data.get("password"),
     };
 
-    try {
-      console.log("soy el try de la llamada de registrase para añadir usuario")
+    try {    
       await axios.post("http://localhost:4003/users", newUser);
-      console.log("soy despues del try")
       login(newUser.password, newUser.email);
 
       navigate("/MainMenu");
     } catch (error) {
-      console.log("error al registrarme", error);
       handleToastFail();
     }
   };

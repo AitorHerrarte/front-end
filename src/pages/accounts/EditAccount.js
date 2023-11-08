@@ -230,7 +230,7 @@ export default function EditAccount({ account }) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              PROFILE
+              EDIT ACCOUNT
             </Typography>
             <button onClick={logout}>
               <ExitToAppIcon color="inherit" />{" "}

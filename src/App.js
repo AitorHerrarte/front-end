@@ -9,6 +9,7 @@ import Accounts from "./pages/accounts/MyAccounts";
 import Notes from "./pages/notes/notes";
 import AddAccount from "./pages/accounts/AddAccount";
 import EditAccount from "./pages/accounts/EditAccount"
+import Numbers from "./pages/numbers/numbers"
 
 
 
@@ -20,7 +21,7 @@ function App() {
     <>
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login/>} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Profile" element={<GeneralLayout><ProfilePage /></GeneralLayout>} />
         <Route path="/EditAccount/:accountId" element={<GeneralLayout><EditAccount /></GeneralLayout>} />
@@ -28,6 +29,7 @@ function App() {
         <Route path="/Notes" element={<GeneralLayout><Notes /></GeneralLayout>} />
         <Route path="/Accounts" element={<GeneralLayout><Accounts /></GeneralLayout>} />
         <Route path="/AddAccount" element={<GeneralLayout><AddAccount /></GeneralLayout>} />
+        <Route path="/Numbers" element={<GeneralLayout><Numbers /></GeneralLayout>} />
       </Routes>
 
     </>
