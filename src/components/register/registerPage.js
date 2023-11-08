@@ -35,7 +35,7 @@ export default function SignUp() {
     };
 
     try {    
-      await axios.post("http://localhost:4003/users", newUser);
+      await axios.post("https://galiyaitormoneyback-a4x7.onrender.com", newUser);
       login(newUser.password, newUser.email);
 
       navigate("/MainMenu");

@@ -31,7 +31,7 @@ export default function AddAccountPage() {
   const addNumber = async () => {
     if (newNumberData.number.trim() !== "") {
       try {
-        await axios.post("http://localhost:4003/numbers/addNumber/", {
+        await axios.post("https://galiyaitormoneyback-a4x7.onrender.com", {
           numero: newNumberData.number,
         });
         setNewNumberData({ ...newNumberData, number: "" });
@@ -45,7 +45,7 @@ export default function AddAccountPage() {
     if (newNumberData.numberToCalculate.trim() !== "") {
       try {
         const response = await axios.get(
-          `http://localhost:4003/numbers/getAllNextNumbers/${newNumberData.numberToCalculate}`
+          `https://galiyaitormoneyback-a4x7.onrender.com`
         );
         setCalculatedNumbers(response.data.allNextNumbers);
       } catch (error) {
