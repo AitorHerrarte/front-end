@@ -32,7 +32,7 @@ export default function AddAccountPage() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4003/accounts/getAccountUser`,
+        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/getAccountUser`,
         
         {
           headers: {
@@ -53,7 +53,7 @@ export default function AddAccountPage() {
     getAccounts();
     try {
       const response = await axios.post(
-        `http://localhost:4003/accounts/addAccount/`,
+        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/addAccount/`,
         newAccountData,
         {
           headers: {

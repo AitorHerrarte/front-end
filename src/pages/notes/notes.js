@@ -107,7 +107,7 @@ export default function Notes() {
   const getNotes = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:4003/notes/myNotes", {
+      const response = await axios.get("https://galiyaitormoneyback-a4x7.onrender.com/notes/myNotes", {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
@@ -123,7 +123,7 @@ export default function Notes() {
     
       try {
         const response = await axios.post(
-          "http://localhost:4003/notes/addNoteToUser",
+          "https://galiyaitormoneyback-a4x7.onrender.com/notes/addNoteToUser",
           { description: newNote },
           {
             headers: {
@@ -141,7 +141,7 @@ export default function Notes() {
   const deleteNote = async (notes) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4003/notes/${notes._id}`,
+        `https://galiyaitormoneyback-a4x7.onrender.com/notes/${notes._id}`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -162,7 +162,7 @@ export default function Notes() {
     try {
       if (editingNote.id) {
         const response = await axios.patch(
-          `http://localhost:4003/notes/${notes._id}`,
+          `https://galiyaitormoneyback-a4x7.onrender.com/notes/${notes._id}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("token")}`,

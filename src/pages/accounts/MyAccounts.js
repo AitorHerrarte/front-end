@@ -98,7 +98,7 @@ export default function MyAccounts() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4003/accounts/getAccountUser`,
+        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/getAccountUser`,
 
         {
           headers: {
@@ -119,7 +119,7 @@ export default function MyAccounts() {
   const handleDeleteAccount = async (accounts) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4003/accounts/${accounts._id}`,
+        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/${accounts._id}`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
