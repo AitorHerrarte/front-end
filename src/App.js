@@ -9,7 +9,7 @@ import Accounts from "./pages/accounts/MyAccounts";
 import Notes from "./pages/notes/notes";
 import AddAccount from "./pages/accounts/AddAccount";
 import EditAccount from "./pages/accounts/EditAccount"
-import Numbers from "./pages/numbers/numbers"
+import CodereTorrejon from "./pages/codereTorrejon/CodereTorrejon"
 
 
 
@@ -29,7 +29,7 @@ function App() {
         <Route path="/Notes" element={<GeneralLayout><Notes /></GeneralLayout>} />
         <Route path="/Accounts" element={<GeneralLayout><Accounts /></GeneralLayout>} />
         <Route path="/AddAccount" element={<GeneralLayout><AddAccount /></GeneralLayout>} />
-        <Route path="/Numbers" element={<GeneralLayout><Numbers /></GeneralLayout>} />
+        <Route path="/CodereTorrejon" element={<GeneralLayout><CodereTorrejon /></GeneralLayout>} />
       </Routes>
 
     </>

@@ -31,7 +31,7 @@ export default function AddAccountPage() {
   const addNumber = async () => {
     if (newNumberData.number.trim() !== "") {
       try {
-        await axios.post("https://galiyaitormoneyback-a4x7.onrender.com/numbers/addNumber/", {
+        await axios.post("https://galiyaitormoneyback-a4x7.onrender.com/CodereTorrejon/addNumber/", {
           numero: newNumberData.number,
         });
         setNewNumberData({ ...newNumberData, number: "" });
@@ -45,7 +45,7 @@ export default function AddAccountPage() {
     if (newNumberData.numberToCalculate.trim() !== "") {
       try {
         const response = await axios.get(
-          `https://galiyaitormoneyback-a4x7.onrender.com/numbers/getAllNextNumbers/${newNumberData.numberToCalculate}`
+          `https://galiyaitormoneyback-a4x7.onrender.com/CodereTorrejon/getAllNextNumbers/${newNumberData.numberToCalculate}`
         );
         setCalculatedNumbers(response.data.allNextNumbers);
       } catch (error) {
@@ -74,7 +74,7 @@ export default function AddAccountPage() {
             <AttachMoneyIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            RULETA
+            RULETA TORREJON Codere
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField

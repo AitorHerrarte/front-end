@@ -27,8 +27,8 @@ export const MainListItems = () => {
   const goProfile = () => {
     navigate("/Profile")
   }
-  const goNumbers = () => {
-    navigate("/Numbers")
+  const goCodereTorrejon = () => {
+    navigate("/CodereTorrejon")
   }
   
 
@@ -58,11 +58,11 @@ export const MainListItems = () => {
       </ListItemIcon>
       <ListItemText primary="Accounts" />
     </ListItemButton>
-    <ListItemButton onClick={goNumbers}>
+    <ListItemButton onClick={goCodereTorrejon}>
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Numbers" />
+      <ListItemText primary="Torrejon Codere" />
     </ListItemButton>
   </React.Fragment>
 );
