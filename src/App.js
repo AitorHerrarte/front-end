@@ -10,7 +10,7 @@ import Notes from "./pages/notes/notes";
 import AddAccount from "./pages/accounts/AddAccount";
 import EditAccount from "./pages/accounts/EditAccount"
 import CodereTorrejon from "./pages/codereTorrejon/CodereTorrejon"
-import Quantum  from "../../back-end/modules/quantumModel";
+import Quantum  from "./pages/quantum/Quantum";
 
 
 
