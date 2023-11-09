@@ -30,6 +30,9 @@ export const MainListItems = () => {
   const goCodereTorrejon = () => {
     navigate("/CodereTorrejon")
   }
+  const goQuantum = () => {
+    navigate("/Quantum")
+  }
   
 
   return (
@@ -63,6 +66,12 @@ export const MainListItems = () => {
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Torrejon Codere" />
+    </ListItemButton>
+    <ListItemButton onClick={goQuantum}>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Quantum" />
     </ListItemButton>
   </React.Fragment>
 );

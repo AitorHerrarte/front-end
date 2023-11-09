@@ -10,6 +10,7 @@ import Notes from "./pages/notes/notes";
 import AddAccount from "./pages/accounts/AddAccount";
 import EditAccount from "./pages/accounts/EditAccount"
 import CodereTorrejon from "./pages/codereTorrejon/CodereTorrejon"
+import Quantum  from "../../back-end/modules/quantumModel";
 
 
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/Accounts" element={<GeneralLayout><Accounts /></GeneralLayout>} />
         <Route path="/AddAccount" element={<GeneralLayout><AddAccount /></GeneralLayout>} />
         <Route path="/CodereTorrejon" element={<GeneralLayout><CodereTorrejon /></GeneralLayout>} />
+        <Route path="/Quantum" element={<GeneralLayout><Quantum /></GeneralLayout>} />
       </Routes>
 
     </>
