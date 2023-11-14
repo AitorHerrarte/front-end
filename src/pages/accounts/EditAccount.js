@@ -110,7 +110,7 @@ export default function EditAccount({ account }) {
   const nameChange = async () => {
     try {
       await axios.patch(
-        `http://localhost:4003/accounts/${accountId}/updateAccountName`,
+        `https://aitorpersonalproyectback.onrender.com/accounts/${accountId}/updateAccountName`,
         { accountName: name },
         {
           headers: {
@@ -143,7 +143,7 @@ export default function EditAccount({ account }) {
   const brokerChange = async (account) => {
     try {
       await axios.patch(
-        `http://localhost:4003/accounts/${accountId}/updateAccountBroker`,
+        `https://aitorpersonalproyectback.onrender.com/accounts/${accountId}/updateAccountBroker`,
         { broker: broker },
         {
           headers: {
@@ -176,7 +176,7 @@ export default function EditAccount({ account }) {
   const balanceChange = async (account) => {
     try {
       await axios.patch(
-        `http://localhost:4003/accounts/${accountId}/updateAccountBalance`,
+        `https://aitorpersonalproyectback.onrender.com/accounts/${accountId}/updateAccountBalance`,
         { balance: balance },
         {
           headers: {

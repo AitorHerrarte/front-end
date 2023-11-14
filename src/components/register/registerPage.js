@@ -36,7 +36,7 @@ export default function SignUp() {
 
     try {
       console.log("soy el try de la llamada de registrase para añadir usuario")
-      await axios.post("http://localhost:4003/users", newUser);
+      await axios.post("https://aitorpersonalproyectback.onrender.com/users", newUser);
       console.log("soy despues del try")
       login(newUser.password, newUser.email);
 
