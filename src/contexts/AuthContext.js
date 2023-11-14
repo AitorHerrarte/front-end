@@ -21,7 +21,9 @@ export const AuthContextProvider = ({ children }) => {
       return navigate("/");
     }
     try {
-      const response = await axios.get("https://galiyaitormoneyback-a4x7.onrender.com/users/me", {
+
+      const response = await axios.get("https://aitorpersonalproyectback.onrender.com/users/me", {
+
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
@@ -34,7 +36,9 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (password, email) => {
     try {
-      const response = await axios.post("https://galiyaitormoneyback-a4x7.onrender.com/users/login", {
+
+      const response = await axios.post("https://aitorpersonalproyectback.onrender.com/users/login", {
+
         password: password,
         email: email,
       });

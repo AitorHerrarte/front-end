@@ -107,7 +107,9 @@ export default function Notes() {
   const getNotes = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("https://galiyaitormoneyback-a4x7.onrender.com/notes/myNotes", {
+
+      const response = await axios.get("https://aitorpersonalproyectback.onrender.com/notes/myNotes", {
+
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
@@ -123,7 +125,9 @@ export default function Notes() {
     
       try {
         const response = await axios.post(
-          "https://galiyaitormoneyback-a4x7.onrender.com/notes/addNoteToUser",
+
+          "https://aitorpersonalproyectback.onrender.com/notes/addNoteToUser",
+
           { description: newNote },
           {
             headers: {
@@ -141,7 +145,9 @@ export default function Notes() {
   const deleteNote = async (notes) => {
     try {
       const response = await axios.delete(
-        `https://galiyaitormoneyback-a4x7.onrender.com/notes/${notes._id}`,
+
+        `https://aitorpersonalproyectback.onrender.com/notes/${notes._id}`,
+
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -162,7 +168,9 @@ export default function Notes() {
     try {
       if (editingNote.id) {
         const response = await axios.patch(
-          `https://galiyaitormoneyback-a4x7.onrender.com/notes/${notes._id}`,
+
+          `https://aitorpersonalproyectback.onrender.com/notes/${notes._id}`,
+
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("token")}`,

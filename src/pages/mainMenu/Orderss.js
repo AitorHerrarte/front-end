@@ -53,7 +53,9 @@ export default function Orders() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
-        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/getAccountUser`,
+
+        `https://aitorpersonalproyectback.onrender.com/accounts/getAccountUser`,
+        
 
         {
           headers: {
@@ -71,14 +73,14 @@ export default function Orders() {
 
   const getOrderData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:4003/orders/users/${profile.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("token")}`,
-          },
-        }
-      );
+
+      const response = await axios.get(`https://aitorpersonalproyectback.onrender.com/orders/users/${profile.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+        },
+      });
+
       setOrders(response.data);
     } catch (error) {
       handleToastFail();
@@ -87,7 +89,7 @@ export default function Orders() {
   const addOrder = async (newOrder) => {
     try {
       const response = await axios.post(
-        `http://localhost:4003/orders/addOrder`,
+        `https://aitorpersonalproyectback.onrender.com/orders/addOrder`,
         newOrder,
         {
           headers: {
@@ -138,7 +140,7 @@ export default function Orders() {
   const handleDeleteOrder = async (orders) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4003/orders/${orders._id}`,
+        `https://aitorpersonalproyectback.onrender.com/orders/${orders._id}`,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,

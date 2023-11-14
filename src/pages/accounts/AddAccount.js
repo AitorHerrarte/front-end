@@ -32,7 +32,9 @@ export default function AddAccountPage() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
-        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/getAccountUser`,
+
+        `https://aitorpersonalproyectback.onrender.com/accounts/getAccountUser`,
+
         
         {
           headers: {
@@ -53,7 +55,9 @@ export default function AddAccountPage() {
     getAccounts();
     try {
       const response = await axios.post(
-        `https://galiyaitormoneyback-a4x7.onrender.com/accounts/addAccount/`,
+
+        `https://aitorpersonalproyectback.onrender.com/accounts/addAccount/`,
+
         newAccountData,
         {
           headers: {
