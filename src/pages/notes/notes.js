@@ -134,7 +134,7 @@ export default function Notes() {
         setNewNote("");
         getNotes();
       } catch (error) {
-        handleToastFail();
+        // handleToastFail();
       }
     }
   };

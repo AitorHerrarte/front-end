@@ -128,7 +128,7 @@ export default function MyAccounts() {
       );
       getAccounts();
     } catch (error) {
-      handleToastFail();
+      // handleToastFail();
     }
   };
   const goEditAccount = (accountId) => {

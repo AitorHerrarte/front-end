@@ -132,7 +132,7 @@ export default function EditAccount({ account }) {
       });
       setReload(!reload);
     } catch (error) {
-      handleToastFail();
+      // handleToastFail();
     }
   };
 

@@ -83,7 +83,7 @@ export default function Orders() {
       });
       setOrders(response.data);
     } catch (error) {
-     handleToastFail();
+    //  handleToastFail();
     }
   };
   const addOrder = async (newOrder) => {
