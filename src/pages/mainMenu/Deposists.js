@@ -28,7 +28,7 @@ export default function Deposits() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4003/accounts/getAccountUser`,
+        `https://aitorpersonalproyectback.onrender.com/accounts/getAccountUser`,
         
         {
           headers: {

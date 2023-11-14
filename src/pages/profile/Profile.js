@@ -108,7 +108,7 @@ export default function Dashboard() {
   const EmailChange = async () => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
+        "https://aitorpersonalproyectback.onrender.com/users/updateUser",
         { email: email },
         {
           headers: {
@@ -148,7 +148,7 @@ export default function Dashboard() {
   const PasswordChange = async () => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
+        "https://aitorpersonalproyectback.onrender.com/users/updateUser",
         { password: password },
         {
           headers: {
@@ -188,7 +188,7 @@ export default function Dashboard() {
   const NameChange = async () => {
     try {
       await axios.patch(
-        "http://localhost:4003/users/updateUser",
+        "https://aitorpersonalproyectback.onrender.com/users/updateUser",
         { userName: username },
         {
           headers: {
