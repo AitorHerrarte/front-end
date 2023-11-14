@@ -20,9 +20,8 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import MenuItem from "@mui/material/MenuItem"; 
+import MenuItem from "@mui/material/MenuItem";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
 
 function preventDefault(event) {
   event.preventDefault();
@@ -54,36 +53,37 @@ export default function Orders() {
   const getAccounts = async () => {
     try {
       const response = await axios.get(
+
         `https://aitorpersonalproyectback.onrender.com/accounts/getAccountUser`,
         
+
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
           },
         }
       );
-      
-      setAccounts(response.data)
-     
-    }catch (error){
-      
-    }
-  }
+
+      setAccounts(response.data);
+    } catch (error) {}
+  };
   useEffect(() => {
     getAccounts();
   }, []);
 
   const getOrderData = async () => {
     try {
+
       const response = await axios.get(`https://aitorpersonalproyectback.onrender.com/orders/users/${profile.id}`,
       {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
       });
+
       setOrders(response.data);
     } catch (error) {
-     handleToastFail();
+      handleToastFail();
     }
   };
   const addOrder = async (newOrder) => {
@@ -99,10 +99,8 @@ export default function Orders() {
       );
       getOrderData();
     } catch (error) {
-     handleToastFail();
+      handleToastFail();
     }
-
-    
   };
 
   useEffect(() => {
@@ -118,17 +116,16 @@ export default function Orders() {
   const handleAddOrder = () => {
     const newOrder = {
       date: newOrderData.date,
-      account:selectedAccount,
+      account: selectedAccount,
       description: newOrderData.description,
       pair: newOrderData.pair,
       entryPrice: newOrderData.entryPrice,
       closePrice: newOrderData.closePrice,
       orderProfit: parseFloat(newOrderData.profit),
     };
-    addOrder(newOrder)
+    addOrder(newOrder);
     toast.success("you added ur order correctly");
     setShowPopUp(false);
-
   };
 
   const handleInputChange = (event) => {
@@ -139,7 +136,6 @@ export default function Orders() {
       setNewOrderData({ ...newOrderData, [name]: value });
     }
   };
-
 
   const handleDeleteOrder = async (orders) => {
     try {
@@ -156,6 +152,7 @@ export default function Orders() {
       handleToastFail();
     }
   };
+
 
   return (
     <React.Fragment>
@@ -179,8 +176,9 @@ export default function Orders() {
                 {new Date(orders.date).toLocaleDateString()}
               </TableCell>
               <TableCell>
-              {accounts.find((account) => account._id === orders.account)?.accountName || 'N/A'}
-                </TableCell>
+                {accounts.find((account) => account._id === orders.account)
+                  ?.accountName || "N/A"}
+              </TableCell>
               <TableCell>{orders.description}</TableCell>
               <TableCell>{orders.pair}</TableCell>
               <TableCell>{orders.entryPrice}</TableCell>

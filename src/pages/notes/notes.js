@@ -107,7 +107,9 @@ export default function Notes() {
   const getNotes = async () => {
     setIsLoading(true);
     try {
+
       const response = await axios.get("https://aitorpersonalproyectback.onrender.com/notes/myNotes", {
+
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("token")}`,
         },
@@ -123,7 +125,9 @@ export default function Notes() {
     
       try {
         const response = await axios.post(
+
           "https://aitorpersonalproyectback.onrender.com/notes/addNoteToUser",
+
           { description: newNote },
           {
             headers: {
@@ -141,7 +145,9 @@ export default function Notes() {
   const deleteNote = async (notes) => {
     try {
       const response = await axios.delete(
+
         `https://aitorpersonalproyectback.onrender.com/notes/${notes._id}`,
+
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -162,7 +168,9 @@ export default function Notes() {
     try {
       if (editingNote.id) {
         const response = await axios.patch(
+
           `https://aitorpersonalproyectback.onrender.com/notes/${notes._id}`,
+
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("token")}`,
@@ -248,7 +256,7 @@ export default function Notes() {
               variant="outlined"
               value={newNote}
               onChange={handleNoteChange}
-              style={{ marginBottom: "16px" }}
+              style={{ marginBottom: "16px" , width:"100%"}}
             />
             <Button variant="contained" color="primary" onClick={addNote}>
               Agregar Nota
@@ -276,7 +284,7 @@ export default function Notes() {
                         padding: "0.2em",
                       }}
                     >
-                      Note: {note.description}
+                     {note.description}
                     </Typography>
                   </CardContent>
                   <CardActions>

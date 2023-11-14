@@ -27,6 +27,13 @@ export const MainListItems = () => {
   const goProfile = () => {
     navigate("/Profile")
   }
+  const goCodereTorrejon = () => {
+    navigate("/CodereTorrejon")
+  }
+  const goQuantum = () => {
+    navigate("/Quantum")
+  }
+  
 
   return (
   <React.Fragment>
@@ -53,6 +60,18 @@ export const MainListItems = () => {
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Accounts" />
+    </ListItemButton>
+    <ListItemButton onClick={goCodereTorrejon}>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Torrejon Codere" />
+    </ListItemButton>
+    <ListItemButton onClick={goQuantum}>
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Quantum" />
     </ListItemButton>
   </React.Fragment>
 );

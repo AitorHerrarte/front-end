@@ -34,15 +34,16 @@ export default function SignUp() {
       password: data.get("password"),
     };
 
+
     try {
       console.log("soy el try de la llamada de registrase para añadir usuario")
       await axios.post("https://aitorpersonalproyectback.onrender.com/users", newUser);
       console.log("soy despues del try")
+
       login(newUser.password, newUser.email);
 
       navigate("/MainMenu");
     } catch (error) {
-      console.log("error al registrarme", error);
       handleToastFail();
     }
   };
